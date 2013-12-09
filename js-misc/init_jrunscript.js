@@ -38,6 +38,13 @@
      }
    }
 
+  function fileExists(path){
+    var file = new File(path);
+    return file.exists();
+  }
+
+  var requirePaths = ["."];
+
    function require(path){
      exports = {};
      var _path;
@@ -46,7 +53,21 @@
      }else{
        _path = path + ".js";
      }
-     _load(_path);
+
+     var foundPath;
+     for(var a=0,len=requirePaths.length; a<len; a++){
+       var modulePath = requirePaths[a] + "/" + _path;
+       if(fileExists(modulePath)){
+         foundPath = modulePath;
+         break;
+       }
+     }
+     
+     if(foundPath){
+       _load(foundPath);
+     }else{
+       throw "module not found: " + path;
+     }
 
      var obj;
      for(var k in exports){
@@ -55,6 +76,7 @@
      exports = {};
      return obj;
    }
+  require.paths = requirePaths;
 
    // ----------------
 
