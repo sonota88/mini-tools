@@ -48,7 +48,7 @@
    function require(path){
      exports = {};
      var _path;
-     if(path.match(/\.js/)){
+     if(path.match(/\.js$/)){
        _path = path;
      }else{
        _path = path + ".js";
