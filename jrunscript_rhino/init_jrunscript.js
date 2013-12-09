@@ -33,6 +33,13 @@
          + src
          + " })();"
        );
+     } catch(e) {
+       println("----");
+       for(var k in e){
+         println("" + k + "(" + e[k] + ")");
+       }
+       println("----");
+       throw e;
      } finally {
        engine.put(engine.FILENAME, oldFilename);
      }
